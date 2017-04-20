@@ -63,7 +63,7 @@
         android:layout_marginBottom="38dp">
 
         <ImageView
-            android:id="@+id/imageView3_rep_repetir"
+            android:id="@+id/imageView_rep_repetir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/rep_repetir"
