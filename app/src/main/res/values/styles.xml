@@ -57,4 +57,11 @@
     </style>
 
 
+    <!-- REPRODUCTOR -->
+    <style name="Reproductortyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorReproductor</item>
+        <item name="colorPrimaryDark">@color/colorReproductorDark</item>
+    </style>
+
 </resources>

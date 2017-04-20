@@ -11,4 +11,14 @@
     perfirl-->
     <color name="colorProfile">#424242</color>
     <color name="colorProfileDar">#757575</color>
+
+
+
+    <!---Colores de reproductor-->
+    <color name="colorAlbum">#a9a8aa</color>
+    <color name="colorArtista">#b2b1b3</color>
+    <color name="colorCancion">#ffffff</color>
+    <color name="colorReproductor">#463b56</color>
+    <color name="colorReproductorDark">#3f364d</color>
+
 </resources>

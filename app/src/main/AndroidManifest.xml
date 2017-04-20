@@ -29,7 +29,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ReproductorActivity"></activity>
+        <activity
+            android:name=".ReproductorActivity"
+            android:theme="@style/Reproductortyle">
+        </activity>
     </application>
 
 </manifest>
