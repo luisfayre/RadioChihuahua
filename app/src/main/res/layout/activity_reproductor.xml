@@ -7,14 +7,18 @@
     tools:context="radiochihuahua.radiochihuahua.ReproductorActivity"
     android:background="@drawable/fondo_reproductor">
 
-
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/tool_bar_rep"
+        />
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
+        android:layout_marginBottom="26dp"
+        android:id="@+id/relativeLayout3"
+        android:layout_above="@+id/relativeLayout4"
+        android:layout_alignParentStart="true">
 
 
         <TextView
@@ -49,4 +53,84 @@
             android:textSize="12sp"/>
 
     </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout2"
+        android:layout_above="@+id/relativeLayout3"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="38dp">
+
+        <ImageView
+            android:id="@+id/imageView3_rep_repetir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/rep_repetir"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/imageView_rep_siguiente"
+            android:layout_marginStart="15dp" />
+
+        <ImageView
+            android:id="@+id/imageView_rep_siguiente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/rep_sigiente"
+            android:layout_marginStart="15dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/imageView_rep_play" />
+        <ImageView
+            android:id="@+id/imageView_rep_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/rep_play"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:id="@+id/imageView_rep_anterior"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/repanterior"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/imageView_rep_play"
+            android:layout_marginEnd="15dp" />
+
+        <ImageView
+            android:id="@+id/imageView_rep_shuffle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/rep_shuffle"
+            android:layout_alignTop="@+id/imageView_rep_anterior"
+            android:layout_toStartOf="@+id/imageView_rep_anterior"
+            android:layout_marginEnd="15dp"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="28dp"
+        android:id="@+id/relativeLayout4">
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:thumb="@drawable/seekbar_thumb" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="210dp"
+        android:layout_height="250dp"
+        android:src="@drawable/img3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp" />
+
 </RelativeLayout>
