@@ -67,7 +67,7 @@ public class ReproductorActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int res_id = item.getItemId();
         if (res_id == android.R.id.home) {
-            Toast.makeText(ReproductorActivity.this, "Regresar", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ReproductorActivity.this, "Atras", Toast.LENGTH_SHORT).show();
         }
         if (res_id == R.id.action_buscar) {
             Toast.makeText(ReproductorActivity.this, "Buscar", Toast.LENGTH_SHORT).show();
