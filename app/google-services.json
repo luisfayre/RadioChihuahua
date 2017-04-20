@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "258591576148-dm942hqbtq6329recip2ispfc7v01idr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "radiochihuahua.radiochihuahua",
+            "certificate_hash": "46a678a1860a20568b039f0557663e9b31c49c0a"
+          }
+        },
+        {
           "client_id": "258591576148-llolkhrthetk6pqg20u2lmlqb0qnpo89.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
