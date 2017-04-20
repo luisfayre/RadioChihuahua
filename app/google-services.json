@@ -1,0 +1,58 @@
+{
+  "project_info": {
+    "project_number": "258591576148",
+    "firebase_url": "https://radiochihuahua-1ef31.firebaseio.com",
+    "project_id": "radiochihuahua-1ef31",
+    "storage_bucket": "radiochihuahua-1ef31.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:258591576148:android:bb147cbc41e7aa3d",
+        "android_client_info": {
+          "package_name": "radiochihuahua.radiochihuahua"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "258591576148-llolkhrthetk6pqg20u2lmlqb0qnpo89.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "radiochihuahua.radiochihuahua",
+            "certificate_hash": "521118aee95d6bc9c9fc2abf843679169f100486"
+          }
+        },
+        {
+          "client_id": "258591576148-h3goenkraj5je0rf66c6cn4va3ks8fqu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCHBp4YguzZgeSCUnwlVwlutyF--dgme8"
+        },
+        {
+          "current_key": "AIzaSyA7Tt9NlnXdcN7xqpzcBf4vnJLOcm6_Uv8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "258591576148-h3goenkraj5je0rf66c6cn4va3ks8fqu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

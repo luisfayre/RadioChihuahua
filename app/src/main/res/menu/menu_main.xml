@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/action_back"
+        android:title="Atras"
+        android:icon="@drawable/atrasflecha"
+        app:showAsAction="ifRoom"
+
+        />
+
+    <item
+        android:id="@+id/action_cancel"
+        android:title="Atras"
+        android:icon="@drawable/x"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/action_ok"
+        android:title="Atras"
+        android:icon="@drawable/flechaconfirmar"
+        app:showAsAction="ifRoom"
+        />
+
+</menu>

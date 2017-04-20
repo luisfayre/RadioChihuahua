@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="radiochihuahua.radiochihuahua.LoginActivity"
+    android:background="@drawable/fondo"
+    android:weightSum="1">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout"
+        android:layout_below="@+id/imageFondo"
+        android:layout_alignParentEnd="true">
+
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:textColorHint="@color/colorAccent"
+            android:textColor="@color/colorAccent"
+            android:hint="Correo Electrónico"
+            android:inputType="textEmailAddress"
+            android:textAlignment="center"/>
+
+        <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColorHint="@color/colorAccent"
+            android:textColor="@color/colorAccent"
+            android:layout_margin="15dp"
+            android:hint="Contraseña"
+            android:inputType="textPassword" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="298dp"
+        android:layout_height="54dp"
+        android:id="@+id/imageFondo"
+        android:src="@drawable/logo"
+        android:layout_marginTop="39dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+
+
+
+    <TextView
+        android:textAlignment="center"
+        android:id="@+id/textViewSinUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="¿No tienes cuenta?"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/colorAccent"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="145dp"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignParentStart="true">
+
+        <!--Botone-->
+        <ImageView
+            android:id="@+id/buttonSingIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:onClick="login"
+            android:src="@drawable/btn_iniciarsesion"
+            android:layout_weight="0.13"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <com.facebook.login.widget.LoginButton
+            xmlns:fb="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/loginButtonFB"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:paddingBottom="20dp"
+            style="@style/FacebookLoginButton"
+            fb:com_facebook_login_text=""
+            fb:com_facebook_logout_text=""
+            android:layout_below="@+id/buttonSingIn"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="13dp" />
+
+        <Button
+            android:id="@+id/loginButtonG"
+            android:layout_width="150dp"
+            android:layout_height="42dp"
+            android:layout_alignTop="@+id/loginButtonFB"
+            android:layout_toEndOf="@+id/loginButtonFB"
+            style="@style/GoogleLoginBuuton" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#683fb5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#ffffff</color>
+    <color name="colorPreuba">#ece4ed</color>
+
+
+
+    <!---Colores de
+    perfirl-->
+    <color name="colorProfile">#424242</color>
+    <color name="colorProfileDar">#757575</color>
+</resources>

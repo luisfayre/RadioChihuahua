@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Radio Chihuahua</string>
+
+    <string name="facebook_app_id">301628076923224</string>
+
+    <string name="error_login">Ocurrío un error</string>
+    <string name="cancel_login">Se ha cancelado</string>
+    <string name="not_log_in">No se ha podido iniciar sesión</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_password">password</string>
+
+    <string name="editar_perfil">Editar Perfil</string>
+</resources>

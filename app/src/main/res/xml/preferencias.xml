@@ -1,0 +1,43 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- PREFERENCIAS GENERALES -->
+    <PreferenceCategory
+        android:key="pref_gen"
+        android:title="preferencia generales">
+        <!-- Visibilidad de Miniaturas de las Entradas -->
+        <CheckBoxPreference
+            android:key="miniaturas"
+            android:title="preferncia miniatura"
+            android:defaultValue="true" />
+
+        <!-- Cantidad máxima de entradas -->
+        <ListPreference
+            android:key="numArticulos"
+            android:title="titulo"
+            android:defaultValue="6"
+            android:summary="resumen" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_twitter"
+        android:title="preferencia twitter">
+        <!-- Usuario de Twitter -->
+        <EditTextPreference
+            android:key="usuario_twitter"
+            android:title="editar preferencia"
+            android:summary="porefe"
+            android:selectAllOnFocus="true"
+            android:singleLine="true" />
+
+        <!-- Password de Twitter -->
+        <EditTextPreference
+            android:key="contraseña_twitter"
+            android:title="prefe"
+            android:summary="párana"
+            android:selectAllOnFocus="true"
+            android:inputType="textWebPassword"
+            android:singleLine="true" />
+    </PreferenceCategory>
+
+
+</PreferenceScreen>
