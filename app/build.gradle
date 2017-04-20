@@ -9,7 +9,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 24
         versionCode 1
-        versionName "1.0-Prueba"
+        versionName "1.0.0"
     }
     buildTypes {
         release {
@@ -48,5 +48,6 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:cardview-v7:23.1.1'
 
+    compile 'com.android.support.constraint:constraint-layout:+'
 }
 apply plugin: 'com.google.gms.google-services'

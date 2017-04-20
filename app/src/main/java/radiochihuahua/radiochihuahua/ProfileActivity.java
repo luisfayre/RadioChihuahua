@@ -413,6 +413,9 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
         int res_id = item.getItemId();
         if (res_id == R.id.action_back) {
             Toast.makeText(ProfileActivity.this, "Atras", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, ReproductorActivity.class);
+            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
         if (res_id == R.id.action_cancel) {
             Toast.makeText(ProfileActivity.this, "Cancelar", Toast.LENGTH_SHORT).show();

@@ -17,18 +17,19 @@
 
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".UsersEmailPassword.emailChangeActivity"/>
-        <activity android:name=".UsersEmailPassword.passwordChangeActivity"/>
+        <activity android:name=".UsersEmailPassword.emailChangeActivity" />
+        <activity android:name=".UsersEmailPassword.passwordChangeActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".ProfileActivity"
+        <activity
+            android:name=".ProfileActivity"
             android:theme="@style/Profilestyle">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ReproductorActivity"></activity>
     </application>
 
 </manifest>
