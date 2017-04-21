@@ -191,7 +191,7 @@ public class ReproductorActivity extends AppCompatActivity {
 
         Calendar c = Calendar.getInstance();
         int hora = c.get(Calendar.HOUR_OF_DAY);
-        int dia = c.get(Calendar.DAY_OF_WEEK);
+        int dia = c.get(Calendar.DAY_OF_WEEK) - 1;
         String programa = "";
         String conductor= "";
         String estacion = "Magia digital 93.3";
@@ -326,7 +326,7 @@ public class ReproductorActivity extends AppCompatActivity {
                 }else if(hora >= 18 && hora < 22){
                     programa = "Música";
                     conductor = "Alejandro Richarte";
-                }else if(hora >= 22 && hora < 24){
+                }else if(hora >= 22 && hora <= 24){
                     programa = "Programación músucal normal";
                 }
                 CanciontextView.setText(programa);
@@ -334,7 +334,7 @@ public class ReproductorActivity extends AppCompatActivity {
                 ArtistatextView.setText(estacion);
                 break;
             case 5:
-                //   Toast.makeText(ReproductorActivity.this, "Viernes", Toast.LENGTH_SHORT).show();
+                   Toast.makeText(ReproductorActivity.this, "Viernes", Toast.LENGTH_SHORT).show();
                 if(hora >= 1 && hora < 6){
                     programa = "Programación música normal";
                 }else if(hora >= 6 && hora < 10){
@@ -360,7 +360,7 @@ public class ReproductorActivity extends AppCompatActivity {
                 }else if(hora >= 18 && hora < 22){
                     programa = "Música";
                     conductor = "Alejandro Richarte";
-                }else if(hora >= 22 && hora < 24){
+                }else if(hora >= 22 && hora < 1){
                     programa = "Programación músical normal";
                 }
                 CanciontextView.setText(programa);
@@ -368,7 +368,7 @@ public class ReproductorActivity extends AppCompatActivity {
                 ArtistatextView.setText(estacion);
                 break;
             case 6:
-                //    Toast.makeText(ReproductorActivity.this, "Sabado", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReproductorActivity.this, "Sabado", Toast.LENGTH_SHORT).show();
                 if(hora >= 1 && hora < 6){
                     programa = "Programación música normal";
                 }else if(hora >= 6 && hora < 10){
@@ -383,7 +383,7 @@ public class ReproductorActivity extends AppCompatActivity {
                 }else if(hora >= 19 && hora < 21){
                     programa = "T.N.C the Nashville conection";
                     conductor = "Armando Velazquez";
-                }else if(hora >= 22 && hora < 23){
+                }else if(hora >= 22 && hora < 24){
                     programa = "Programación músical normal";
                 }
                 CanciontextView.setText(programa);
@@ -391,7 +391,7 @@ public class ReproductorActivity extends AppCompatActivity {
                 ArtistatextView.setText(estacion);
                 break;
             case 7:
-                //    Toast.makeText(ReproductorActivity.this, "Domingo", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReproductorActivity.this, "Domingo", Toast.LENGTH_SHORT).show();
                 if(hora >= 22 && hora < 19){
                     programa = "Programación música normal";
                 }else if(hora >= 19 && hora < 21) {
