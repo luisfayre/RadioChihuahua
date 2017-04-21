@@ -1,7 +1,9 @@
 package radiochihuahua.radiochihuahua;
 
 
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +34,7 @@ public class ReproductorActivity extends AppCompatActivity {
     //Reproductor
     private MediaPlayer mediaPlayer;
     private String STREAM_URL ="https://p-audio-4.radpog.com/play/15.mp3";
+    private ProgressBar progressBar;  //Progressbar
 
 
     @Override
@@ -70,43 +74,43 @@ public class ReproductorActivity extends AppCompatActivity {
 
         /**REPRODUCTOR-*/
         mediaPlayer = new MediaPlayer();
-
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
 
         play.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                if(mediaPlayer.isPlaying()){
+                    play.setImageResource(R.drawable.play);
+                    mediaPlayer.stop();
+                }else{
+                    try{
+                        play.setImageResource(R.drawable.circulo);
+                        progressBar.setVisibility(View.VISIBLE);
+                        mediaPlayer.reset();
+                        mediaPlayer.setDataSource(STREAM_URL);
+                        mediaPlayer.prepareAsync();
 
-                try{
-                    mediaPlayer.reset();
-                    mediaPlayer.setDataSource(STREAM_URL);
-                    mediaPlayer.prepareAsync();
+                        mediaPlayer.setOnPreparedListener(new MediaPlayer.
+                                OnPreparedListener(){
+                            @Override
+                            public void onPrepared(MediaPlayer mp){
+                                progressBar.setVisibility(View.GONE);
+                                play.setImageResource(R.drawable.stop);
+                                mp.start();
+                            }
+                        });
 
-                    mediaPlayer.setOnPreparedListener(new MediaPlayer.
-                            OnPreparedListener(){
-                        @Override
-                        public void onPrepared(MediaPlayer mp){
-                            mp.start();
+                    } catch (IOException e){
+                        e.printStackTrace();
 
-                        }
-                    });
-
-                } catch (IOException e){
-                    e.printStackTrace();
-
+                    }
                 }
+                
+
             }
 
         });
-
-        repetir.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                mediaPlayer.stop();
-
-            }
-        });
-
-
 
 
     }

@@ -61,46 +61,66 @@
         android:layout_above="@+id/relativeLayout3"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="38dp">
-
         <ImageView
             android:id="@+id/imageView_rep_repetir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/rep_repetir"
+            android:src="@drawable/rep_repetir"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/imageView_rep_siguiente"
-            android:layout_marginStart="15dp" />
+            android:layout_alignTop="@+id/imageView_rep_siguiente"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@+id/imageView_rep_siguiente" />
 
         <ImageView
             android:id="@+id/imageView_rep_siguiente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/rep_sigiente"
+            android:src="@drawable/rep_sigiente"
             android:layout_marginStart="15dp"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/imageView_rep_play" />
-        <ImageView
-            android:id="@+id/imageView_rep_play"
+            android:layout_alignBottom="@+id/imageView_rep_shuffle"
+            android:layout_toEndOf="@+id/rep_rep" />
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/rep_play"
+            android:id="@+id/rep_rep"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true">
+
+            <ImageView
+                android:id="@+id/imageView_rep_play"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/play"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:theme="@style/ProgressBar_Reproductor"/>
+
+        </RelativeLayout>
 
         <ImageView
             android:id="@+id/imageView_rep_anterior"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/repanterior"
+            android:src="@drawable/repanterior"
             android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/imageView_rep_play"
-            android:layout_marginEnd="15dp" />
+            android:layout_toStartOf="@+id/rep_rep"
+            android:layout_marginEnd="15dp"/>
 
         <ImageView
             android:id="@+id/imageView_rep_shuffle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/rep_shuffle"
+            android:src="@drawable/rep_shuffle"
             android:layout_alignTop="@+id/imageView_rep_anterior"
             android:layout_toStartOf="@+id/imageView_rep_anterior"
             android:layout_marginEnd="15dp"
@@ -132,5 +152,6 @@
         android:src="@drawable/img3"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp" />
+
 
 </RelativeLayout>

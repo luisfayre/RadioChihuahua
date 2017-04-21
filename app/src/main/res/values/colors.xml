@@ -20,5 +20,6 @@
     <color name="colorCancion">#ffffff</color>
     <color name="colorReproductor">#463b56</color>
     <color name="colorReproductorDark">#3f364d</color>
+    <color name="colorProgressBar">#ffffff</color>
 
 </resources>
