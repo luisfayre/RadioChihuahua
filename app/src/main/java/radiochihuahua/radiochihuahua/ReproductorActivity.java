@@ -148,7 +148,7 @@ public class ReproductorActivity extends AppCompatActivity {
         islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
-                Toast.makeText(ReproductorActivity.this, "Funciono", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReproductorActivity.this, "Funciono ", Toast.LENGTH_SHORT).show();
 
             }
         }).addOnFailureListener(new OnFailureListener() {
