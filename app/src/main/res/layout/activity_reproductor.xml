@@ -25,12 +25,11 @@
             android:id="@+id/ArtistatextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="KORN"
             android:textAllCaps="true"
             android:textColor="@color/colorArtista"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:textSize="12sp"/>
+            android:textSize="18dp"/>
 
         <TextView
             android:id="@+id/CanciontextView"
@@ -38,9 +37,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ArtistatextView"
             android:layout_centerHorizontal="true"
-            android:text="The Path of Totality"
             android:textColor="@color/colorCancion"
-            android:textSize="24sp"/>
+            android:textSize="24dp"
+            android:textAlignment="center"/>
 
         <TextView
             android:id="@+id/AlbumtextView"
@@ -48,9 +47,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/CanciontextView"
             android:layout_centerHorizontal="true"
-            android:text="The Paradigm Shift (2013)"
             android:textColor="@color/colorAlbum"
-            android:textSize="12sp"/>
+            android:textSize="18dp"/>
 
     </RelativeLayout>
 
@@ -59,8 +57,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/relativeLayout2"
         android:layout_above="@+id/relativeLayout3"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="38dp">
+        android:layout_alignParentStart="true">
         <ImageView
             android:id="@+id/imageView_rep_repetir"
             android:layout_width="wrap_content"
@@ -146,12 +143,12 @@
     </RelativeLayout>
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imageView_caratula"
         android:layout_width="210dp"
         android:layout_height="250dp"
-        android:src="@drawable/img3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp" />
+        android:src="@drawable/magiadigital"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

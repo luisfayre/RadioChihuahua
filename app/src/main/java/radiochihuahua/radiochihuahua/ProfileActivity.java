@@ -65,16 +65,17 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
     private TextView emailTextView;
     //private TextView idFBTextView;
     private ImageView photoFBImageView;
-    private FirebaseAuth firebaseAuth;
     private TextView passwordTextView;
+    //Firbase
+    private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
     private GoogleApiClient googleApiClient;
-    private Switch switchGoogle;
-    private Switch switchFacebook;
+
     private String emailperdido;
     private TextView editTextPassword;
     private TextView locationTextView;
-
+    private Switch switchGoogle;
+    private Switch switchFacebook;
 
     //Facebook
     private CallbackManager callbackManager;
