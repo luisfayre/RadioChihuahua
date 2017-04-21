@@ -10,6 +10,8 @@ import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -24,10 +26,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -42,7 +48,7 @@ public class ReproductorActivity extends AppCompatActivity {
     //Botones
     private ImageView play, siguiente, anterior, repetir, alternar;
     //Imagen
-    private View reproductor;
+    private ImageView reproductor;
     //Toolbar
     private Toolbar toolbar;
     private TextView TextView_toolbar;
@@ -62,6 +68,7 @@ public class ReproductorActivity extends AppCompatActivity {
 
 
         /**TEXTO-**/
+
         ArtistatextView = (TextView) findViewById(R.id.ArtistatextView);
         CanciontextView = (TextView) findViewById(R.id.CanciontextView);
         AlbumtextView = (TextView) findViewById(R.id.AlbumtextView);
@@ -74,12 +81,14 @@ public class ReproductorActivity extends AppCompatActivity {
         CanciontextView.setTypeface(Bold);
         AlbumtextView.setTypeface(Light);
         TextView_toolbar.setTypeface(Bold);
+
         /**BOTONES-*/
         play = (ImageView) findViewById(R.id.imageView_rep_play);
         anterior = (ImageView) findViewById(R.id.imageView_rep_anterior);
         siguiente = (ImageView) findViewById(R.id.imageView_rep_siguiente);
         alternar = (ImageView) findViewById(R.id.imageView_rep_shuffle);
         repetir = (ImageView) findViewById(R.id.imageView_rep_repetir);
+
         /**TOOLBAR-*/
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -95,6 +104,9 @@ public class ReproductorActivity extends AppCompatActivity {
         mediaPlayer = new MediaPlayer();
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
+
+        /**FIREBASE-*/
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         play.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,24 +149,24 @@ public class ReproductorActivity extends AppCompatActivity {
 
         });
 
-        //horachingona();
+        imagenEstacion();
 
     }
 
     private void imagenEstacion(){
+        //StorageReference islandRef = storageReference.child("la_nortenita/6211_290.png");
         StorageReference islandRef = storageReference.child("magia/magiadigital.png");
 
-        final long ONE_MEGABYTE = 1024 * 1024;
-        islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        islandRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
-            public void onSuccess(byte[] bytes) {
-                Toast.makeText(ReproductorActivity.this, "Funciono ", Toast.LENGTH_SHORT).show();
+            public void onSuccess(Uri uri) {
+               Glide.with(ReproductorActivity.this).load(uri).into(reproductor);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(ReproductorActivity.this, "No funciono", Toast.LENGTH_SHORT).show();
+            public void onFailure(@NonNull Exception e) {
+
             }
         });
     }
@@ -196,7 +208,7 @@ public class ReproductorActivity extends AppCompatActivity {
                 }else if(hora >= 18 && hora < 22){
                     programa = "Música";
                     conductor = "Alejandro Richarte";
-                }else if(hora >= 22 && hora < 13){
+                }else if(hora >= 22 && hora < 23){
                     programa = "Programación músucal normal";
                 }
                 CanciontextView.setText(programa);
@@ -230,7 +242,7 @@ public class ReproductorActivity extends AppCompatActivity {
                 }else if(hora >= 18 && hora < 22){
                     programa = "Música";
                     conductor = "Alejandro Richarte";
-                }else if(hora >= 22 && hora < 13){
+                }else if(hora >= 22 && hora < 23){
                     programa = "Programación músucal normal";
                 }
                 CanciontextView.setText(programa);
@@ -264,7 +276,7 @@ public class ReproductorActivity extends AppCompatActivity {
                 }else if(hora >= 18 && hora < 22){
                     programa = "Música";
                     conductor = "Alejandro Richarte";
-                }else if(hora >= 22 && hora < 13){
+                }else if(hora >= 22 && hora < 23){
                     programa = "Programación músucal normal";
                 }
                 CanciontextView.setText(programa);
@@ -298,7 +310,7 @@ public class ReproductorActivity extends AppCompatActivity {
                 }else if(hora >= 18 && hora < 22){
                     programa = "Música";
                     conductor = "Alejandro Richarte";
-                }else if(hora >= 22 && hora < 13){
+                }else if(hora >= 22 && hora < 24){
                     programa = "Programación músucal normal";
                 }
                 CanciontextView.setText(programa);
@@ -332,7 +344,7 @@ public class ReproductorActivity extends AppCompatActivity {
                 }else if(hora >= 18 && hora < 22){
                     programa = "Música";
                     conductor = "Alejandro Richarte";
-                }else if(hora >= 22 && hora < 23){
+                }else if(hora >= 22 && hora < 24){
                     programa = "Programación músical normal";
                 }
                 CanciontextView.setText(programa);

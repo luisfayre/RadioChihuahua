@@ -146,7 +146,7 @@
         android:id="@+id/imageView_caratula"
         android:layout_width="210dp"
         android:layout_height="250dp"
-        android:src="@drawable/magiadigital"
+
         android:layout_below="@+id/toolbar"
         android:layout_centerHorizontal="true" />
 
