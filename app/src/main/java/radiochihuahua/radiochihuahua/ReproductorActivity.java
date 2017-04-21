@@ -21,6 +21,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -49,6 +51,7 @@ public class ReproductorActivity extends AppCompatActivity {
     private ImageView play, siguiente, anterior, repetir, alternar;
     //Imagen
     private ImageView reproductor;
+    private ProgressBar progressBarRep;
     //Toolbar
     private Toolbar toolbar;
     private TextView TextView_toolbar;
@@ -60,6 +63,8 @@ public class ReproductorActivity extends AppCompatActivity {
     private boolean connected = false;
     //Firebase
     private StorageReference storageReference;
+
+    private Animation fade_in,fade_out;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +79,8 @@ public class ReproductorActivity extends AppCompatActivity {
         AlbumtextView = (TextView) findViewById(R.id.AlbumtextView);
         TextView_toolbar = (TextView) findViewById(R.id.TextView_toolbar);
         reproductor = (ImageView) findViewById(R.id.imageView_caratula);
+        progressBarRep = (ProgressBar) findViewById(R.id.progressBarRep);
+        progressBarRep.setVisibility(View.VISIBLE);//ProgressBar Carratula
         //Fuente Letras
         Typeface Bold = Typeface.createFromAsset(getAssets(), "Montserrat-Bold.otf");
         Typeface Light = Typeface.createFromAsset(getAssets(), "Montserrat-Light.otf");
@@ -102,7 +109,7 @@ public class ReproductorActivity extends AppCompatActivity {
 
         /**REPRODUCTOR-*/
         mediaPlayer = new MediaPlayer();
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar); //ProgressBar Play
         progressBar.setVisibility(View.GONE);
 
         /**FIREBASE-*/
@@ -112,14 +119,14 @@ public class ReproductorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 pruebaConeccion();
-                if (connected == true) {
+                if (connected) {
                     if (mediaPlayer.isPlaying()) {
                         play.setImageResource(R.drawable.play);
                         mediaPlayer.stop();
                     } else {
                         try {
                             play.setImageResource(R.drawable.circulo);
-                            progressBar.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.VISIBLE); //Progressbar play
                             mediaPlayer.reset();
                             CanciontextView.setText("Cargando...");
                             AlbumtextView.setText("Cargando...");
@@ -149,19 +156,27 @@ public class ReproductorActivity extends AppCompatActivity {
 
         });
 
-        imagenEstacion();
 
+        /*  ///ANIMACION
+        fade_in = AnimationUtils.loadAnimation(ReproductorActivity.this, R.anim.fade_in);
+        fade_out = AnimationUtils.loadAnimation(ReproductorActivity.this, R.anim.fade_out);
+        reproductor.setAnimation(fade_in);
+        */
+
+        imagenEstacion();
     }
 
     private void imagenEstacion(){
         //StorageReference islandRef = storageReference.child("la_nortenita/6211_290.png");
         StorageReference islandRef = storageReference.child("magia/magiadigital.png");
-
         islandRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-               Glide.with(ReproductorActivity.this).load(uri).into(reproductor);
-
+                progressBarRep.setVisibility(View.GONE);
+                Glide.with(ReproductorActivity.this)
+                        .load(uri)
+                        .animate(R.anim.fade_in)
+                        .into(reproductor);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -169,6 +184,7 @@ public class ReproductorActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
     private void horachingona() {
