@@ -2,17 +2,12 @@ package radiochihuahua.radiochihuahua;
 
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,9 +17,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,14 +29,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Locale;
-import java.util.Map;
+import java.util.HashMap;
+
 
 public class ReproductorActivity extends AppCompatActivity {
 
@@ -65,6 +57,14 @@ public class ReproductorActivity extends AppCompatActivity {
     private StorageReference storageReference;
 
     private Animation fade_in,fade_out;
+    private Handler mHandler = new Handler();
+    private Utilities utils;
+    private ArrayList<HashMap<String, String>> songsList = new ArrayList<HashMap<String, String>>();
+    private TextView tiempoInicio, tiempoFin;
+    private SeekBar seekBar;
+    private double timeStart = 0, finalTime =0;
+    private double totalDuration = 0, currentDuration =0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +78,13 @@ public class ReproductorActivity extends AppCompatActivity {
         CanciontextView = (TextView) findViewById(R.id.CanciontextView);
         AlbumtextView = (TextView) findViewById(R.id.AlbumtextView);
         TextView_toolbar = (TextView) findViewById(R.id.TextView_toolbar);
-        reproductor = (ImageView) findViewById(R.id.imageView_caratula);
+
+        tiempoInicio = (TextView) findViewById(R.id.TextView_tiempoinicio);  //Control de tiempo
+        tiempoFin = (TextView) findViewById(R.id.TextView_tiempofin);        //Control de tiempo
+        reproductor = (ImageView) findViewById(R.id.imageView_caratula);     //Caratula estacion
+
+        seekBar = (SeekBar) findViewById(R.id.seekBar);
+
         progressBarRep = (ProgressBar) findViewById(R.id.progressBarRep);
         progressBarRep.setVisibility(View.VISIBLE);//ProgressBar Carratula
         //Fuente Letras
@@ -110,6 +116,9 @@ public class ReproductorActivity extends AppCompatActivity {
         /**REPRODUCTOR-*/
         mediaPlayer = new MediaPlayer();
         progressBar = (ProgressBar) findViewById(R.id.progressBar); //ProgressBar Play
+        utils = new Utilities();
+
+
         progressBar.setVisibility(View.GONE);
 
         /**FIREBASE-*/
@@ -133,7 +142,6 @@ public class ReproductorActivity extends AppCompatActivity {
                             ArtistatextView.setText("Cargando...");
                             mediaPlayer.setDataSource(STREAM_URL);
                             mediaPlayer.prepareAsync();
-
                             mediaPlayer.setOnPreparedListener(new MediaPlayer.
                                     OnPreparedListener() {
                                 @Override
@@ -142,6 +150,10 @@ public class ReproductorActivity extends AppCompatActivity {
                                     play.setImageResource(R.drawable.stop);
                                     horachingona();
                                     mp.start();
+                                    updateProgressBar();
+//                                    long currentDuration = mediaPlayer.getCurrentPosition();
+//                                    timeStart = mediaPlayer.getCurrentPosition();
+//                                    seekBar.setProgress((int) timeStart);
                                 }
                             });
 
@@ -162,7 +174,7 @@ public class ReproductorActivity extends AppCompatActivity {
         fade_out = AnimationUtils.loadAnimation(ReproductorActivity.this, R.anim.fade_out);
         reproductor.setAnimation(fade_in);
         */
-
+        //updateProgressBar();
         imagenEstacion();
     }
 
@@ -400,7 +412,7 @@ public class ReproductorActivity extends AppCompatActivity {
                 }else if(hora >= 19 && hora < 21) {
                     programa = "La Hora Nacional";
                 }
-                    CanciontextView.setText(programa);
+                CanciontextView.setText(programa);
                 AlbumtextView.setText(conductor);
                 ArtistatextView.setText(estacion);
                 break;
@@ -451,4 +463,35 @@ public class ReproductorActivity extends AppCompatActivity {
         super.onStop();
         mediaPlayer.stop();
     }
+
+    /**
+     * Update timer on seekbar
+     * */
+    public void updateProgressBar() {
+        mHandler.postDelayed(mUpdateTimeTask, 100);
+    }
+
+    /**
+     * Background Runnable thread
+     * */
+    private Runnable mUpdateTimeTask = new Runnable() {
+        public void run() {
+            long totalDuration = mediaPlayer.getDuration();
+            long currentDuration = mediaPlayer.getCurrentPosition();
+
+            // Displaying Total Duration time
+            tiempoFin.setText(""+utils.milliSecondsToTimer(totalDuration));
+            // Displaying time completed playing
+            tiempoInicio.setText(""+utils.milliSecondsToTimer(currentDuration));
+
+            // Updating progress bar
+            int progress = (int)(utils.getProgressPercentage(currentDuration, totalDuration));
+            //Log.d("Progress", ""+progress);
+            seekBar.setProgress(progress);
+
+            // Running this thread after 100 milliseconds
+            mHandler.postDelayed(this, 100);
+        }
+    };
+
 }

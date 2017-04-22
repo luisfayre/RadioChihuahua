@@ -13,50 +13,34 @@
         />
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="26dp"
-        android:id="@+id/relativeLayout3"
-        android:layout_above="@+id/relativeLayout4"
-        android:layout_alignParentStart="true">
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/cartatula_estacion">
 
+        <ImageView
+            android:id="@+id/imageView_caratula"
+            android:layout_width="210dp"
+            android:src="@drawable/desconocido"
+            android:layout_height="250dp"
+            android:layout_centerHorizontal="true" />
 
-        <TextView
-            android:id="@+id/ArtistatextView"
+        <ProgressBar
+            android:id="@+id/progressBarRep"
+            style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAllCaps="true"
-            android:textColor="@color/colorArtista"
-            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:textSize="18dp"/>
-
-        <TextView
-            android:id="@+id/CanciontextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ArtistatextView"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/colorCancion"
-            android:textSize="24dp"
-            android:textAlignment="center"/>
-
-        <TextView
-            android:id="@+id/AlbumtextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/CanciontextView"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/colorAlbum"
-            android:textSize="18dp"/>
-
+            android:layout_centerVertical="true"
+            android:theme="@style/ProgressBar_Reproductor"/>
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/relativeLayout2"
-        android:layout_above="@+id/relativeLayout3"
+        android:id="@+id/control_reproductor"
+        android:layout_above="@+id/datos_estacion"
         android:layout_alignParentStart="true">
         <ImageView
             android:id="@+id/imageView_rep_repetir"
@@ -127,42 +111,88 @@
 
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="28dp"
-        android:id="@+id/relativeLayout4">
+        android:layout_marginBottom="26dp"
+        android:id="@+id/datos_estacion"
+        android:layout_above="@+id/control_tiempo"
+        android:layout_alignParentStart="true">
 
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="250dp"
+
+        <TextView
+            android:id="@+id/ArtistatextView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:thumb="@drawable/seekbar_thumb" />
+            android:textAllCaps="true"
+            android:textColor="@color/colorArtista"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="18dp"
+            android:text="Artista" />
+
+        <TextView
+            android:id="@+id/CanciontextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ArtistatextView"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorCancion"
+            android:textSize="24dp"
+            android:textAlignment="center"
+            android:text="Cancion" />
+
+        <TextView
+            android:id="@+id/AlbumtextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/CanciontextView"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorAlbum"
+            android:textSize="18dp"
+            android:text="Album" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
-        android:layout_centerHorizontal="true">
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="28dp"
+        android:id="@+id/control_tiempo">
 
-        <ImageView
-            android:id="@+id/imageView_caratula"
-            android:layout_width="210dp"
-            android:layout_height="250dp"
-            android:layout_centerHorizontal="true" />
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:thumb="@drawable/seekbar_thumb"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/TextView_tiempoinicio" />
 
-        <ProgressBar
-            android:id="@+id/progressBarRep"
-            style="?android:attr/progressBarStyle"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:theme="@style/ProgressBar_Reproductor"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/colorTiempo"
+            android:id="@+id/TextView_tiempoinicio"
+            android:layout_below="@+id/seekBar"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/TextView_tiempofin"
+            android:layout_alignTop="@+id/TextView_tiempoinicio"
+            android:layout_alignEnd="@+id/seekBar"
+            android:textColor="@color/colorTiempo"
+            android:layout_marginEnd="16dp" />
+
+
+
     </RelativeLayout>
+
+
 
 
 </RelativeLayout>
