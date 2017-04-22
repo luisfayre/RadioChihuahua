@@ -22,5 +22,6 @@
     <color name="colorReproductorDark">#3f364d</color>
     <color name="colorProgressBar">#ffffff</color>
     <color name="colorTiempo">#a9a8aa</color>
+    <color name="colorSeekBar">#711cc6</color>
 
 </resources>

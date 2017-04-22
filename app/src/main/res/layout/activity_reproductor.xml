@@ -167,6 +167,7 @@
             android:layout_height="wrap_content"
             android:thumb="@drawable/seekbar_thumb"
             android:layout_alignParentTop="true"
+            android:progressTint="@color/colorSeekBar"
             android:layout_alignStart="@+id/TextView_tiempoinicio" />
 
         <TextView
