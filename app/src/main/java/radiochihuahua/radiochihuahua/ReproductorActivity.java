@@ -2,6 +2,7 @@ package radiochihuahua.radiochihuahua;
 
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
@@ -49,7 +50,9 @@ public class ReproductorActivity extends AppCompatActivity {
     private TextView TextView_toolbar;
     //Reproductor
     private MediaPlayer mediaPlayer;
-    private String STREAM_URL ="https://p-audio-4.radpog.com/play/15.mp3";  //Magia digital 93.3
+    private String STREAM_URL_MAGIA ="https://p-audio-4.radpog.com/play/15.mp3";  //Magia digital 93.3
+    private String STREAM_URL_NORTENA ="https://p-audio-4.radpog.com/play/16.mp3";  //Magia digital 93.3
+    private String DEFECTO = "";
     private ProgressBar progressBar;  //Progressbar
     //Checar internet
     private boolean connected = false;
@@ -68,10 +71,11 @@ public class ReproductorActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //Orientacion Vertical
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reproductor);
 
-
+        DEFECTO = STREAM_URL_MAGIA;
         /**TEXTO-**/
 
         ArtistatextView = (TextView) findViewById(R.id.ArtistatextView);
@@ -140,7 +144,7 @@ public class ReproductorActivity extends AppCompatActivity {
                             CanciontextView.setText("Cargando...");
                             AlbumtextView.setText("Cargando...");
                             ArtistatextView.setText("Cargando...");
-                            mediaPlayer.setDataSource(STREAM_URL);
+                            mediaPlayer.setDataSource(DEFECTO);
                             mediaPlayer.prepareAsync();
                             mediaPlayer.setOnPreparedListener(new MediaPlayer.
                                     OnPreparedListener() {
@@ -168,6 +172,41 @@ public class ReproductorActivity extends AppCompatActivity {
 
         });
 
+        siguiente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(DEFECTO == STREAM_URL_MAGIA){
+                    DEFECTO = STREAM_URL_NORTENA;
+                    imagenEstacionNortenita();
+                    radio(DEFECTO);
+                }else{
+                    DEFECTO = STREAM_URL_MAGIA;
+                    imagenEstacionMagia();
+                    radio(DEFECTO);
+                }
+            }
+
+
+        });
+
+        anterior.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(DEFECTO == STREAM_URL_MAGIA){
+                    DEFECTO = STREAM_URL_NORTENA;
+                    imagenEstacionNortenita();
+                    radio(DEFECTO);
+                }else{
+                    DEFECTO = STREAM_URL_MAGIA;
+                    imagenEstacionMagia();
+                    radio(DEFECTO);
+                }
+            }
+
+
+        });
+
+
 
         /*  ///ANIMACION
         fade_in = AnimationUtils.loadAnimation(ReproductorActivity.this, R.anim.fade_in);
@@ -175,12 +214,72 @@ public class ReproductorActivity extends AppCompatActivity {
         reproductor.setAnimation(fade_in);
         */
         //updateProgressBar();
-        imagenEstacion();
+        imagenEstacionMagia();
     }
 
-    private void imagenEstacion(){
+    private void radio(String defecto) {
+        pruebaConeccion();
+        if (connected) {
+            if (mediaPlayer.isPlaying()) {
+                play.setImageResource(R.drawable.play);
+                mediaPlayer.stop();
+                radio(defecto);
+            } else {
+                try {
+                    play.setImageResource(R.drawable.circulo);
+                    progressBar.setVisibility(View.VISIBLE); //Progressbar play
+                    mediaPlayer.reset();
+                    CanciontextView.setText("Cargando...");
+                    AlbumtextView.setText("Cargando...");
+                    ArtistatextView.setText("Cargando...");
+                    mediaPlayer.setDataSource(defecto);
+                    mediaPlayer.prepareAsync();
+                    mediaPlayer.setOnPreparedListener(new MediaPlayer.
+                            OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mp) {
+                            progressBar.setVisibility(View.GONE);
+                            play.setImageResource(R.drawable.stop);
+                            horachingona();
+                            mp.start();
+                            updateProgressBar();
+//                                    long currentDuration = mediaPlayer.getCurrentPosition();
+//                                    timeStart = mediaPlayer.getCurrentPosition();
+//                                    seekBar.setProgress((int) timeStart);
+                        }
+                    });
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                }
+            }
+        }
+    }
+
+    private void imagenEstacionMagia(){
         //StorageReference islandRef = storageReference.child("la_nortenita/6211_290.png");
         StorageReference islandRef = storageReference.child("magia/magiadigital.png");
+        islandRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                progressBarRep.setVisibility(View.GONE);
+                Glide.with(ReproductorActivity.this)
+                        .load(uri)
+                        .animate(R.anim.fade_in)
+                        .into(reproductor);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+
+    }
+    private void imagenEstacionNortenita(){
+        StorageReference islandRef = storageReference.child("la_nortenita/6211_290.png");
+        //StorageReference islandRef = storageReference.child("la_nortenita/magiadigital.png");
         islandRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
