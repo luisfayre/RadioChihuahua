@@ -366,6 +366,7 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
         if (opr.isDone()) {
             //Toast.makeText(ProfileActivity.this, "Logeado Con Google", Toast.LENGTH_SHORT).show();
             switchGoogle.setChecked(true);
+            datosFBG();
         } else {
             switchGoogle.setChecked(false);
         }
@@ -374,6 +375,7 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
             //Toast.makeText(ProfileActivity.this, "Logeado Con Facebook", Toast.LENGTH_SHORT).show();
             switchFacebook.setChecked(true);
             fotoFacebook();
+            datosFBG();
 
         } else {
             switchFacebook.setChecked(false);
@@ -381,6 +383,40 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
         if(!opr.isDone()& AccessToken.getCurrentAccessToken() == null){
             //Toast.makeText(ProfileActivity.this, "Logeado con firebase", Toast.LENGTH_SHORT).show();
             datosFirebase();
+        }
+    }
+
+    private void datosFBG() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mostrardatosFBG(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void mostrardatosFBG(DataSnapshot dataSnapshot) {
+        for(DataSnapshot ds : dataSnapshot.getChildren()){
+            firebaseAuth = FirebaseAuth.getInstance();
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            if(user !=null){
+                UserInformation infoUser = new UserInformation();
+                infoUser.setName(ds.child(user.getUid()).getValue(UserInformation.class).getName());
+                infoUser.setEmail(ds.child(user.getUid()).getValue(UserInformation.class).getEmail());
+                infoUser.setLocation(ds.child(user.getUid()).getValue(UserInformation.class).getLocation());
+               // nameTextView.setText(infoUser.getName());
+             //   emailTextView.setText(infoUser.getEmail());
+                locationTextView.setText(infoUser.getLocation());
+            }
+
         }
     }
 
@@ -538,9 +574,9 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                Toast.makeText(ProfileActivity.this, "" + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, "Locacion estableceida: " + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
                 locationTextView.setText(menuItem.getTitle());
-               saveLocation();
+                saveLocation();
                 return false;
             }
         });
