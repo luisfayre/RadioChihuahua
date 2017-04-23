@@ -377,7 +377,7 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
         if (opr.isDone()) {
             //Toast.makeText(ProfileActivity.this, "Logeado Con Google", Toast.LENGTH_SHORT).show();
             switchGoogle.setChecked(true);
-            datosFBG();
+          //  datosFBG();
         } else {
             switchGoogle.setChecked(false);
         }
@@ -386,7 +386,7 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
             //Toast.makeText(ProfileActivity.this, "Logeado Con Facebook", Toast.LENGTH_SHORT).show();
             switchFacebook.setChecked(true);
             fotoFacebook();
-            datosFBG();
+           // datosFBG();
 
         } else {
             switchFacebook.setChecked(false);
