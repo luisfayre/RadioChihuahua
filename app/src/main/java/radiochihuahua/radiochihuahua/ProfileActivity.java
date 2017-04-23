@@ -50,7 +50,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -87,6 +91,10 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
     //Firebase
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
+    
+    
     private GoogleApiClient googleApiClient;
     //Facebook
     private CallbackManager callbackManager;
@@ -129,8 +137,6 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
         TextView_toolbar_profile = (TextView) findViewById(R.id.TextView_toolbar_profile);
         //ProgressDialog
         progressDialog = new ProgressDialog(this);
-
-
         //Tipo de letra
         Typeface Bold = Typeface.createFromAsset(getAssets(), "Montserrat-Bold.otf");
         Typeface Light = Typeface.createFromAsset(getAssets(), "Montserrat-Light.otf");
@@ -177,6 +183,9 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
         //Firebase
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
+
         if (user != null) {
             String email = user.getEmail();
             Uri photoUrl = user.getPhotoUrl();
@@ -190,6 +199,44 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
             goLoginScreen();
         }
         fotodePerfil();
+        datosFirebase();
+    }
+
+    private void datosFirebase() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mostrardatos(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void mostrardatos(DataSnapshot dataSnapshot) {
+
+        for(DataSnapshot ds : dataSnapshot.getChildren()){
+
+            firebaseAuth = FirebaseAuth.getInstance();
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            if(user !=null){
+                UserInformation infoUser = new UserInformation();
+                infoUser.setName(ds.child(user.getUid()).getValue(UserInformation.class).getName());
+                infoUser.setEmail(ds.child(user.getUid()).getValue(UserInformation.class).getEmail());
+                infoUser.setLocation(ds.child(user.getUid()).getValue(UserInformation.class).getLocation());
+                nameTextView.setText(infoUser.getName());
+                emailTextView.setText(infoUser.getEmail());
+                locationTextView.setText(infoUser.getLocation());
+            }
+
+        }
     }
 
     private void goLoginScreen() {

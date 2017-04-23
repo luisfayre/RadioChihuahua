@@ -109,16 +109,15 @@ public class RegisterActivity extends AppCompatActivity {
     private void saveUserInformation (){
         String name = editTextUser.getText().toString().trim();
         String email = editTextEmail.getText().toString().trim();
+        String location = "Locacion no establecida";
 
-        UserInformation userInformation = new UserInformation(name, email);
+        UserInformation userInformation = new UserInformation(name, email, location);
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
-
-        databaseReference.child("Usuarios").child(user.getUid()).setValue(userInformation);
-       // databaseReference.child("Usuarios").child(user.getUid()).setValue(userInformation);
-
-        Toast.makeText(RegisterActivity.this, "Ingormacion guardada", Toast.LENGTH_SHORT).show();
-
+        if (user != null) {
+            databaseReference.child("Usuarios").child(user.getUid()).setValue(userInformation);
+            Toast.makeText(RegisterActivity.this, "Inforamacion guardada", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void register(View view) {
