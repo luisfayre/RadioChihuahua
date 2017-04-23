@@ -61,7 +61,13 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorProfile</item>
         <item name="colorPrimaryDark">@color/colorProfileDar</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccentProfile</item>
+    </style>
+
+    <style name="ContraCorrelestyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorProfile</item>
+        <item name="colorPrimaryDark">@color/colorProfileDar</item>
+        <item name="colorAccent">@color/colorAccentProfile</item>
     </style>
 
     <style name="Backgroudndatosstyle">

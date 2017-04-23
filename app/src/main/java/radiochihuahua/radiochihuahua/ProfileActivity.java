@@ -1,6 +1,7 @@
 package radiochihuahua.radiochihuahua;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInstaller;
@@ -10,16 +11,22 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.Layout;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
@@ -109,6 +116,10 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
     //ProgressDialog
     private ProgressDialog progressDialog;
 
+
+    //Layaut email
+    private EditText cambioEmail;
+    private TextView veremailacambiar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -462,14 +473,41 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
             if (opr.isDone()) {
                 Toast.makeText(ProfileActivity.this, "Usuario registrado con Google, no puede cambiar correo", Toast.LENGTH_SHORT).show();
             } else {
-                Intent intent = new Intent(ProfileActivity.this, emailChangeActivity.class);
+               Intent intent = new Intent(ProfileActivity.this, emailChangeActivity.class);
                 //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+               startActivity(intent);
+                //showChangeLangDialog();
             }
         } else {
             Toast.makeText(ProfileActivity.this, "Usuario registrado con Facebook, no puede cambiar correo", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void showChangeLangDialog() {
+//        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom));
+//        LayoutInflater inflater = this.getLayoutInflater();
+//        final View dialogView = inflater.inflate(R.layout.email, null);
+//        dialogBuilder.setView(dialogView);
+//
+//
+//       // veremailacambiar = (TextView) findViewById(R.id.emailTextView_email);
+//       // cambioEmail = (EditText) findViewById(R.id.changeemaileditText);
+//
+//        dialogBuilder.setTitle("Cambiar correo");
+//        dialogBuilder.setPositiveButton("Cambiar", new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int whichButton) {
+//                Toast.makeText(ProfileActivity.this, "Cambiar", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        dialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int whichButton) {
+//                Toast.makeText(ProfileActivity.this, "Cancelar", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        AlertDialog b = dialogBuilder.create();
+//        b.show();
+    }
+
 
     public void cambiarContraseña(View view) {
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);

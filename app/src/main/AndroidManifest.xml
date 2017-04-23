@@ -20,8 +20,9 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/Registerstyle" />
-        <activity android:name=".UsersEmailPassword.emailChangeActivity" />
-        <activity android:name=".UsersEmailPassword.passwordChangeActivity" />
+        <activity
+            android:name=".UsersEmailPassword.emailChangeActivity" android:theme="@style/ContraCorrelestyle"/>
+        <activity android:name=".UsersEmailPassword.passwordChangeActivity" android:theme="@style/ContraCorrelestyle"/>
         <activity
             android:name=".RegisterActivity"
             android:theme="@style/Registerstyle" />
