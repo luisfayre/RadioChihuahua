@@ -82,7 +82,7 @@
 
 
 
-    <TextView
+    <!--TextView
         android:textAlignment="center"
         android:id="@+id/terminosyCodiciones"
         android:layout_width="match_parent"
@@ -90,7 +90,7 @@
         android:text="Al 'Registrarme' Acepto los Términos y Condiciones del servicio."
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:textColor="@color/colorAccent"/>
+        android:textColor="@color/colorAccent"/>  -->
 
 
     <RelativeLayout
@@ -111,7 +111,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:src="@drawable/btn_registrar1"
+        android:src="@drawable/btn_register"
         android:layout_weight="0.13"
         android:layout_below="@+id/linearLayout"
         android:layout_alignParentEnd="true"

@@ -9,8 +9,16 @@
 
     <!---Colores de
     perfirl-->
+    <color name="colorRegister">#4b287e</color>
+    <color name="colorRegisterDark">#8f69ba</color>
+
+
+    <!---Colores de
+    perfirl-->
     <color name="colorProfile">#424242</color>
-    <color name="colorProfileDar">#757575</color>
+    <color name="colorProfileDar">#201d26</color>
+    <color name="colorToolBar">#1a1720</color>
+    <color name="colorText">#9a989c</color>
 
 
 

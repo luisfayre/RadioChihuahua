@@ -47,6 +47,14 @@
     <style name="hola">hola</style>
 
 
+    <!-- Login Register -->
+    <style name="Registerstyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorRegister</item>
+        <item name="colorPrimaryDark">@color/colorRegisterDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
 
     <!-- PERFIL -->
     <style name="Profilestyle" parent="Theme.AppCompat.Light.NoActionBar">

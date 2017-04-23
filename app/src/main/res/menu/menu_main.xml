@@ -2,24 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-    <item
-        android:id="@+id/action_back"
-        android:title="Atras"
-        android:icon="@drawable/atrasflecha"
-        app:showAsAction="ifRoom"
-
-        />
-
     <item
         android:id="@+id/action_cancel"
-        android:title="Atras"
-        android:icon="@drawable/x"
+        android:title="Cancelar"
+        android:icon="@drawable/perfil_x"
         app:showAsAction="ifRoom"
         />
     <item
         android:id="@+id/action_ok"
-        android:title="Atras"
+        android:title="Ok"
         android:icon="@drawable/flechaconfirmar"
         app:showAsAction="ifRoom"
         />

@@ -30,7 +30,7 @@
             android:layout_weight="0.04"
             android:layout_marginStart="23dp"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/textView" />
+            android:layout_toEndOf="@+id/textView_fotoperfil" />
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -69,8 +69,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Subir foto de perfil"
-            android:id="@+id/textView"
+            android:text="@string/foto_perfil"
+            android:id="@+id/textView_fotoperfil"
+            android:textColor="@color/colorText"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="120dp"
             android:layout_centerVertical="true"
@@ -98,6 +99,7 @@
             android:text="CORREO"
             android:id="@+id/TextViewemail"
             android:textSize="15dp"
+            android:textColor="@color/colorText"
             android:layout_marginLeft="1sp"
             android:layout_marginRight="1sp"
             android:layout_alignTop="@+id/emailTextView"
@@ -135,6 +137,7 @@
             android:text="CONTRASEÑA"
             android:id="@+id/TextViewepassword"
             android:textSize="15dp"
+            android:textColor="@color/colorText"
             android:layout_marginLeft="1sp"
             android:layout_marginRight="1sp"
             android:layout_marginStart="22dp"
@@ -171,6 +174,7 @@
             android:text="NOMBRE"
             android:id="@+id/TextViewenombre"
             android:textSize="15dp"
+            android:textColor="@color/colorText"
             android:layout_marginLeft="1sp"
             android:layout_marginRight="1sp"
             android:layout_marginStart="22dp"
@@ -208,6 +212,7 @@
         android:layout_marginLeft="1sp"
         android:layout_marginRight="1sp"
         android:layout_marginStart="22dp"
+        android:textColor="@color/colorText"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true" />
 
@@ -245,6 +250,7 @@
             android:layout_marginRight="1sp"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
+            android:textColor="@color/colorText"
             android:layout_marginStart="22dp" />
 
 
@@ -279,6 +285,7 @@
             android:id="@+id/TextViewfacebook"
             android:textSize="15sp"
             android:layout_marginLeft="1sp"
+            android:textColor="@color/colorText"
             android:layout_marginRight="1sp"
             android:layout_marginStart="22dp"
             android:layout_centerVertical="true"

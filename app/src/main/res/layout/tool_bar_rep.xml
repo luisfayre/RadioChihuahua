@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Media"
+        android:textAlignment="center"
         android:textColor="@color/colorAccent"
         android:textSize="20sp"
         android:id="@+id/TextView_toolbar"/>

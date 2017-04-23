@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInstaller;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -49,6 +50,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -66,34 +68,36 @@ import radiochihuahua.radiochihuahua.UsersEmailPassword.passwordChangeActivity;
 public class ProfileActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     //Elementos Interfaz
-    private TextView nameTextView;
     private TextView emailTextView;
-    private ImageView photoFBImageView;
+    private TextView nameTextView;
     private TextView passwordTextView;
+    private ImageView photoFBImageView;
+    private TextView locationTextView;
+
+    private TextView TextViewemail;
+    private TextView TextViewepassword;
+    private TextView TextViewenombre;
+    private TextView TextViewlocation;
+    private TextView TextViewgoogle;
+    private TextView TextViewfacebook;
+    private TextView textoperfil;
+
     private Switch switchGoogle;
     private Switch switchFacebook;
-
     //Firebase
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
     private GoogleApiClient googleApiClient;
-
-    private String emailperdido;
-    private TextView editTextPassword;
-    private TextView locationTextView;
-
-
     //Facebook
     private CallbackManager callbackManager;
-
-    //IMAGEN
+    //Imagen
     private static final int PICK_IMAGE_REQUEST = 234;
     private Uri filePath;
     private StorageReference storageReference;
     //Toolbar
     private Toolbar toolbar;
-
-    //Progress Dialog
+    private TextView TextView_toolbar_profile;
+    //ProgressDialog
     private ProgressDialog progressDialog;
 
 
@@ -104,28 +108,63 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
         setContentView(R.layout.activity_profile);
 
         //Elementos Interfaz
-        locationTextView = (TextView) findViewById(R.id.locationTextView);
-        nameTextView = (TextView) findViewById(R.id.nameTextView);
         emailTextView = (TextView) findViewById(R.id.emailTextView);
+        passwordTextView = (TextView) findViewById(R.id.passwordTextView);
+        nameTextView = (TextView) findViewById(R.id.nameTextView);
+        locationTextView = (TextView) findViewById(R.id.locationTextView);
+
+        TextViewemail = (TextView) findViewById(R.id.TextViewemail);
+        TextViewepassword = (TextView) findViewById(R.id.TextViewepassword);
+        TextViewenombre = (TextView) findViewById(R.id.TextViewenombre);
+        TextViewlocation = (TextView) findViewById(R.id.TextViewlocation);
+        TextViewgoogle = (TextView) findViewById(R.id.TextViewgoogle);
+        TextViewfacebook = (TextView) findViewById(R.id.TextViewfacebook);
+        textoperfil = (TextView) findViewById(R.id.textView_fotoperfil);
+        //Imagen Perfil
         photoFBImageView = (ImageView) findViewById(R.id.photoFBImageView);
+        //Switch Redes
         switchGoogle = (Switch) findViewById(R.id.switchGoogle);
         switchFacebook = (Switch) findViewById(R.id.switchFacebook);
-        passwordTextView = (TextView) findViewById(R.id.passwordTextView);
-        editTextPassword = (TextView) findViewById(R.id.editTextPassword);
-
+        //Toolbar
+        TextView_toolbar_profile = (TextView) findViewById(R.id.TextView_toolbar_profile);
+        //ProgressDialog
         progressDialog = new ProgressDialog(this);
 
+
+        //Tipo de letra
+        Typeface Bold = Typeface.createFromAsset(getAssets(), "Montserrat-Bold.otf");
+        Typeface Light = Typeface.createFromAsset(getAssets(), "Montserrat-Light.otf");
+        TextView_toolbar_profile.setTypeface(Bold);
+
+        emailTextView.setTypeface(Bold); //correo
+        nameTextView.setTypeface(Bold); //nombre
+        passwordTextView.setTypeface(Bold); // contraseña
+        locationTextView.setTypeface(Bold); //ubicacion
+
+        TextViewemail.setTypeface(Bold); //correo
+        TextViewepassword.setTypeface(Bold); //nombre
+        TextViewenombre.setTypeface(Bold); // contraseña
+        TextViewlocation.setTypeface(Bold); //ubicacion
+        TextViewgoogle.setTypeface(Bold);   //Google
+        TextViewfacebook.setTypeface(Bold); //Facebook
+        textoperfil.setTypeface(Light);
+        //Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            toolbar.setNavigationIcon(R.drawable.perfil_atrasflecha);
+        }
 
         callbackManager = CallbackManager.Factory.create();
 
         storageReference = FirebaseStorage.getInstance().getReference();
 
+        //Contraseña oculta
         passwordTextView.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         passwordTextView.setText("password");
 
-        //Toast.makeText(ProfileActivity.this, "", Toast.LENGTH_SHORT).show();
         //Google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -135,14 +174,10 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-
+        //Firebase
         firebaseAuth = FirebaseAuth.getInstance();
-
         FirebaseUser user = firebaseAuth.getCurrentUser();
-
-
         if (user != null) {
-
             String email = user.getEmail();
             Uri photoUrl = user.getPhotoUrl();
             // String uid = user.getUid();
@@ -246,7 +281,6 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
     public void switchG(View view) {
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
         if (opr.isDone()) {
-            Toast.makeText(ProfileActivity.this, "Logeado Con Google", Toast.LENGTH_SHORT).show();
             switchGoogle.setChecked(true);
             salirGoogle();
         } else {
@@ -359,11 +393,9 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int res_id = item.getItemId();
-        if (res_id == R.id.action_back) {
-            Toast.makeText(ProfileActivity.this, "Atras", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, ReproductorActivity.class);
-            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+        if (res_id == android.R.id.home) {
+             Toast.makeText(ProfileActivity.this, "Atras", Toast.LENGTH_SHORT).show();
+            reproductor();
         }
         if (res_id == R.id.action_cancel) {
             Toast.makeText(ProfileActivity.this, "Cancelar", Toast.LENGTH_SHORT).show();
@@ -372,6 +404,11 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
             Toast.makeText(ProfileActivity.this, "Guardar", Toast.LENGTH_SHORT).show();
         }
         return true;
+    }
+
+    private void reproductor() {
+        Intent intent = new Intent(this, ReproductorActivity.class);
+        startActivity(intent);
     }
 
 
@@ -385,7 +422,6 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
             islandRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
-                    // progressBarRep.setVisibility(View.GONE);
                     Glide.with(ProfileActivity.this)
                             .load(uri)
                             .animate(R.anim.fade_in)

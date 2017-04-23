@@ -564,7 +564,7 @@ public class ReproductorActivity extends AppCompatActivity {
             }else if(hora >= 18 && hora < 19){
                 programa = "Música con Alejandro Richarte";
                 conductor = "Alejandro Richarte";
-            }else if(hora >= 19 && hora < 21){
+            }else if(hora >= 19 && hora < 22){
                 programa = "T.N.C the Nashville conection";
                 conductor = "Armando Velazquez";
             }else if(hora >= 22 && hora < 24){
@@ -582,7 +582,7 @@ public class ReproductorActivity extends AppCompatActivity {
                 conductor = "Armando Velazquez";
             }else if(hora >= 21 && hora < 22) {
                 programa = "La Hora Nacional";
-            }else if(hora >= 2 && hora < 24) {
+            }else if(hora >= 22 && hora < 24) {
                 programa = "Programación músical normal";
             }
             CanciontextView.setText(programa);
@@ -636,7 +636,7 @@ public class ReproductorActivity extends AppCompatActivity {
             }else if(hora >= 19 && hora < 22){
                 programa = "Música";
                 conductor = "Bernardo Ramirez";
-            }else if(hora >= 19 && hora < 24){
+            }else if(hora >= 22 && hora < 24){
                 programa = "Programción músical normal";
             }
             CanciontextView.setText(programa);

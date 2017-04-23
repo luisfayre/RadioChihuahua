@@ -69,11 +69,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //Quitar ActionBar
-       // ActionBar actionBar = getSupportActionBar();
-        //actionBar.hide();
-
-
         //Login
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
@@ -206,13 +201,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
 
-
     private void goMainScreen() {
         Intent intent = new Intent(this, ProfileActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-
-
     }
 
     @Override
