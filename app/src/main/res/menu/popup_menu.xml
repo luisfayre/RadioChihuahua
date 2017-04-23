@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/ahumada"
+        android:title="Ahumada"/>
+
+    <item
+        android:id="@+id/aldama"
+        android:title="Aldama"/>
+
+    <item
+        android:id="@+id/allende"
+        android:title="Allende"/>
+    <item
+        android:id="@+id/chihuahua"
+        android:title="Chihuahua"/>
+    <item
+        android:id="@+id/camarco"
+        android:title="Camargo"/>
+    <item
+        android:id="@+id/casas_grandes"
+        android:title="Casas Grandes"/>
+    <item
+        android:id="@+id/cuauhtemoc"
+        android:title="Cuauhtémoc"/>
+    <item
+        android:id="@+id/delicias"
+        android:title="Delicias"/>
+    <item
+        android:id="@+id/hidalgo_parral"
+        android:title="Hidalgo del Parral"/>
+    <item
+        android:id="@+id/jimenez"
+        android:title="Jiménez"/>
+    <item
+        android:id="@+id/juarez"
+        android:title="Juárez"/>
+    <item
+        android:id="@+id/meoqui"
+        android:title="Meoqui"/>
+</menu>

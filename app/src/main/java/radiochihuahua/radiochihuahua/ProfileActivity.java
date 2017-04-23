@@ -21,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -199,12 +200,10 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
             goLoginScreen();
         }
         fotodePerfil();
-        datosFirebase();
     }
 
     private void datosFirebase() {
         firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = firebaseAuth.getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -221,7 +220,6 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
     }
 
     private void mostrardatos(DataSnapshot dataSnapshot) {
-
         for(DataSnapshot ds : dataSnapshot.getChildren()){
 
             firebaseAuth = FirebaseAuth.getInstance();
@@ -338,7 +336,7 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
     @Override
     protected void onStart() {
         super.onStart();
-        Cuentas();
+        Cuentasss();
 
     }
 
@@ -359,6 +357,30 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
 
         } else {
             switchFacebook.setChecked(false);
+        }
+    }
+
+    public void Cuentasss() {
+        //Comprobar con google
+        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
+        if (opr.isDone()) {
+            //Toast.makeText(ProfileActivity.this, "Logeado Con Google", Toast.LENGTH_SHORT).show();
+            switchGoogle.setChecked(true);
+        } else {
+            switchGoogle.setChecked(false);
+        }
+        //Comprobar con FACEBOOK
+        if (AccessToken.getCurrentAccessToken() != null) {
+            //Toast.makeText(ProfileActivity.this, "Logeado Con Facebook", Toast.LENGTH_SHORT).show();
+            switchFacebook.setChecked(true);
+            fotoFacebook();
+
+        } else {
+            switchFacebook.setChecked(false);
+        }
+        if(!opr.isDone()& AccessToken.getCurrentAccessToken() == null){
+            //Toast.makeText(ProfileActivity.this, "Logeado con firebase", Toast.LENGTH_SHORT).show();
+            datosFirebase();
         }
     }
 
@@ -510,6 +532,35 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
         request.executeAsync();
     }
 
+    public void elegirLocacion(View view) {
+        PopupMenu popupMenu = new PopupMenu(ProfileActivity.this, locationTextView);
+        popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Toast.makeText(ProfileActivity.this, "" + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+                locationTextView.setText(menuItem.getTitle());
+               saveLocation();
+                return false;
+            }
+        });
+
+        popupMenu.show();
+    }
+
+    private void saveLocation() {
+        String name = nameTextView.getText().toString().trim();
+        String email = emailTextView.getText().toString().trim();
+        String location = locationTextView.getText().toString().trim();
+
+        UserInformation userInformation = new UserInformation(name, email, location);
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+            databaseReference.child("Usuarios").child(user.getUid()).setValue(userInformation);
+            Toast.makeText(ProfileActivity.this, "Inforamacion guardada", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
 
 
