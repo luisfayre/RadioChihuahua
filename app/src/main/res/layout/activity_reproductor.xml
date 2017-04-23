@@ -60,7 +60,9 @@
             android:layout_marginStart="15dp"
             android:layout_centerVertical="true"
             android:layout_alignBottom="@+id/imageView_rep_shuffle"
-            android:layout_toEndOf="@+id/rep_rep" />
+            android:layout_toEndOf="@+id/rep_rep"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -127,7 +129,7 @@
             android:textColor="@color/colorArtista"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:text="Artista" />
 
         <TextView
@@ -139,7 +141,7 @@
             android:textColor="@color/colorCancion"
             android:textSize="24dp"
             android:textAlignment="center"
-            android:text="Cancion" />
+            android:text="@string/cancion" />
 
         <TextView
             android:id="@+id/AlbumtextView"

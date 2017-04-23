@@ -1,6 +1,8 @@
 package radiochihuahua.radiochihuahua;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInstaller;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,12 +13,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.text.Layout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,18 +59,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+
 import radiochihuahua.radiochihuahua.UsersEmailPassword.emailChangeActivity;
 import radiochihuahua.radiochihuahua.UsersEmailPassword.passwordChangeActivity;
 
 public class ProfileActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-
+    //Elementos Interfaz
     private TextView nameTextView;
     private TextView emailTextView;
-    //private TextView idFBTextView;
     private ImageView photoFBImageView;
     private TextView passwordTextView;
-    //Firbase
+    private Switch switchGoogle;
+    private Switch switchFacebook;
+
+    //Firebase
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
     private GoogleApiClient googleApiClient;
@@ -74,8 +81,7 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
     private String emailperdido;
     private TextView editTextPassword;
     private TextView locationTextView;
-    private Switch switchGoogle;
-    private Switch switchFacebook;
+
 
     //Facebook
     private CallbackManager callbackManager;
@@ -87,15 +93,17 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
     //Toolbar
     private Toolbar toolbar;
 
+    //Progress Dialog
+    private ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //Orientacion Vertical
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+        //Elementos Interfaz
         locationTextView = (TextView) findViewById(R.id.locationTextView);
         nameTextView = (TextView) findViewById(R.id.nameTextView);
         emailTextView = (TextView) findViewById(R.id.emailTextView);
@@ -104,6 +112,11 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
         switchFacebook = (Switch) findViewById(R.id.switchFacebook);
         passwordTextView = (TextView) findViewById(R.id.passwordTextView);
         editTextPassword = (TextView) findViewById(R.id.editTextPassword);
+
+        progressDialog = new ProgressDialog(this);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -123,7 +136,6 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-
         firebaseAuth = FirebaseAuth.getInstance();
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -134,18 +146,16 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
             String email = user.getEmail();
             Uri photoUrl = user.getPhotoUrl();
             // String uid = user.getUid();
-
             nameTextView.setText(user.getDisplayName());
             emailTextView.setText(user.getEmail());
             // idFBTextView.setText(uid);
             StorageReference riversRef = storageReference.child("images/").child("perfil/").child(user.getUid());
             Glide.with(this).load(photoUrl).into(photoFBImageView);
-
         } else {
             goLoginScreen();
         }
+        fotodePerfil();
     }
-
 
     private void goLoginScreen() {
         Intent intent = new Intent(this, LoginActivity.class);
@@ -153,72 +163,57 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
         startActivity(intent);
     }
 
-    /***
-     * Cerrar cesion 2 plataformas
-     **/
- /*  public void logOutFB(View view) {
-        FirebaseAuth.getInstance().signOut();
-        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
-            @Override
-            public void onResult(Status status) {
-                if (status.isSuccess()) {
-                    goLoginScreen();
-                } else {
-                    Toast.makeText(ProfileActivity.this, "No se pudo cerrar sesión", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        LoginManager.getInstance().logOut();
-        goLoginScreen();
-    }  */
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
     }
 
     public void fotoPerfirl(View view) {
-        Toast.makeText(this, "Cambiar foto de perfir", Toast.LENGTH_SHORT).show();
-        showFileChooser();
-        upliadFile();
-
+        showFileChooser(); // Selecionar archivo
     }
 
     private void showFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Foto de perfil"), PICK_IMAGE_REQUEST);
     }
 
-    private void upliadFile() {
+    private void subirFotodeperfil() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (filePath != null) {
-            StorageReference riversRef = storageReference.child("images/").child("perfil/").child(user.getUid());
-            riversRef.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(ProfileActivity.this, "Archivo subido perfectamente", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(ProfileActivity.this, "Error", Toast.LENGTH_SHORT).show();
-
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                        }
-                    });
-        } else {
-            Toast.makeText(ProfileActivity.this, "No se ha subido correctamente", Toast.LENGTH_SHORT).show();
+        if (user != null) {
+            if (filePath != null) {
+                progressDialog.setTitle("Foto de perfil");
+                progressDialog.show();
+                StorageReference riversRef = storageReference.child("images/").child("perfil/").child(user.getUid());
+                riversRef.putFile(filePath)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                progressDialog.dismiss();
+                                Toast.makeText(ProfileActivity.this, "Foto de perfil cambiada exitosamente", Toast.LENGTH_SHORT).show();
+                                fotodePerfil();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                progressDialog.dismiss();
+                                Toast.makeText(ProfileActivity.this, "El cambio ha fallado", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                                //displaying percentage in progress dialog
+                                progressDialog.setMessage("Subiendo " + ((int) progress) + "%...");
+                            }
+                        });
+            } else {
+                Toast.makeText(ProfileActivity.this, "Su foto de perfil no se ha subido perfectamente", Toast.LENGTH_SHORT).show();
+            }
         }
-
-
     }
 
     @Override
@@ -229,7 +224,7 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 photoFBImageView.setImageBitmap(bitmap);
-
+                subirFotodeperfil();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -267,56 +262,24 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
     }
 
     public void Cuentas() {
-
-        //COMPROBAR GOOGLE
+        //Comprobar con google
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
         if (opr.isDone()) {
-            Toast.makeText(ProfileActivity.this, "Logeado Con Google", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(ProfileActivity.this, "Logeado Con Google", Toast.LENGTH_SHORT).show();
             switchGoogle.setChecked(true);
-
         } else {
             switchGoogle.setChecked(false);
         }
-
-        //COMPROBAR FACEBOOK
+        //Comprobar con FACEBOOK
         if (AccessToken.getCurrentAccessToken() != null) {
-            Toast.makeText(ProfileActivity.this, "Logeado Con Facebook", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(ProfileActivity.this, "Logeado Con Facebook", Toast.LENGTH_SHORT).show();
             switchFacebook.setChecked(true);
-
             fotoFacebook();
 
         } else {
             switchFacebook.setChecked(false);
         }
     }
-
-    private void fotoFacebook() {
-        int dimensionPixelSize = getResources().getDimensionPixelSize(com.facebook.R.dimen.com_facebook_profilepictureview_preset_size_large);
-        Profile profile = Profile.getCurrentProfile();
-        Uri profilePictureUri = ImageRequest.getProfilePictureUri(profile.getId(), dimensionPixelSize, dimensionPixelSize);
-
-        Glide.with(this).load(profilePictureUri)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .into(photoFBImageView);
-
-        GraphRequest request = GraphRequest.newMeRequest(
-                AccessToken.getCurrentAccessToken(),
-                new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(
-                            JSONObject object,
-                            GraphResponse response) {
-                        // Application code
-                    }
-                });
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,link");
-        request.setParameters(parameters);
-        request.executeAsync();
-
-
-    }
-
 
 
     public void salirGoogle() {
@@ -367,22 +330,6 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
         } else {
             Toast.makeText(ProfileActivity.this, "Usuario registrado con Facebook, no puede cambiar correo", Toast.LENGTH_SHORT).show();
         }
-
-/*
-        firebaseAuth = FirebaseAuth.getInstance();
-        emailperdido = emailTextView.getText().toString();
-        firebaseAuth.sendPasswordResetEmail(emailperdido).addOnCompleteListener(new OnCompleteListener() {
-            @Override
-            public void onComplete(@NonNull com.google.android.gms.tasks.Task task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(ProfileActivity.this, "We have sent you instructions to reset your password!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(ProfileActivity.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });*/
-
     }
 
     public void cambiarContraseña(View view) {
@@ -428,6 +375,57 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
     }
 
 
+    /**
+     * Foto de Perfil
+     */
+    private void fotodePerfil() {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+            StorageReference islandRef = storageReference.child("images/").child("perfil/").child(user.getUid());
+            islandRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // progressBarRep.setVisibility(View.GONE);
+                    Glide.with(ProfileActivity.this)
+                            .load(uri)
+                            .animate(R.anim.fade_in)
+                            .into(photoFBImageView);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+        }
+
+
+    }
+
+    private void fotoFacebook() {
+        int dimensionPixelSize = getResources().getDimensionPixelSize(com.facebook.R.dimen.com_facebook_profilepictureview_preset_size_large);
+        Profile profile = Profile.getCurrentProfile();
+        Uri profilePictureUri = ImageRequest.getProfilePictureUri(profile.getId(), dimensionPixelSize, dimensionPixelSize);
+
+        Glide.with(this).load(profilePictureUri)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(photoFBImageView);
+
+        GraphRequest request = GraphRequest.newMeRequest(
+                AccessToken.getCurrentAccessToken(),
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(
+                            JSONObject object,
+                            GraphResponse response) {
+                        // Application code
+                    }
+                });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,link");
+        request.setParameters(parameters);
+        request.executeAsync();
+    }
 
 }
 

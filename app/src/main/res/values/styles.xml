@@ -56,6 +56,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Backgroudndatosstyle">
+        <!-- Customize your theme here. -->
+        <item name="android:background">@color/colorFondoDatos</item>
+    </style>
+
 
     <!-- REPRODUCTOR -->
     <style name="Reproductortyle" parent="Theme.AppCompat.Light.NoActionBar">

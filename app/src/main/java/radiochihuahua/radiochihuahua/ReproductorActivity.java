@@ -555,7 +555,7 @@ public class ReproductorActivity extends AppCompatActivity {
         if(dia == 6){
             if(hora >= 1 && hora < 6){
                 programa = "Programación músical normal";
-            }else if(hora >= 6 && hora < 10){
+            }else if(hora >= 6 && hora < 14){
                 programa = "Música con Chavita de la Riva";
                 conductor = "Chavita de la Riva";
             }else if(hora >= 14 && hora < 18){
@@ -567,7 +567,7 @@ public class ReproductorActivity extends AppCompatActivity {
             }else if(hora >= 19 && hora < 21){
                 programa = "T.N.C the Nashville conection";
                 conductor = "Armando Velazquez";
-            }else if(hora >= 22 && hora < 1){
+            }else if(hora >= 22 && hora < 24){
                 programa = "Programación músical normal";
             }
             CanciontextView.setText(programa);
@@ -582,7 +582,7 @@ public class ReproductorActivity extends AppCompatActivity {
                 conductor = "Armando Velazquez";
             }else if(hora >= 21 && hora < 22) {
                 programa = "La Hora Nacional";
-            }else if(hora >= 2 && hora < 1) {
+            }else if(hora >= 2 && hora < 24) {
                 programa = "Programación músical normal";
             }
             CanciontextView.setText(programa);
@@ -664,7 +664,7 @@ public class ReproductorActivity extends AppCompatActivity {
             }else if(hora >= 19 && hora < 22){
                 programa = "Música";
                 conductor = "Bernardo Ramirez";
-            }else if(hora >= 19 && hora < 1){
+            }else if(hora >= 22 && hora < 24){
                 programa = "Programción músical normal";
             }
             CanciontextView.setText(programa);
@@ -681,7 +681,7 @@ public class ReproductorActivity extends AppCompatActivity {
                 programa = "Programación músical normal";
             }else if(hora >= 21 && hora < 22) {
                 programa = "La Hora Nacional";
-            }else if(hora >= 22 && hora < 1) {
+            }else if(hora >= 22 && hora < 24) {
                 programa = "La Hora Nacional";
             }
             CanciontextView.setText(programa);

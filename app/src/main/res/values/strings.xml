@@ -10,4 +10,7 @@
     <string name="title_activity_password">password</string>
 
     <string name="editar_perfil">Editar Perfil</string>
+    <string name="cancion">Cancion</string>
+    <string name="salir">Salir</string>
+    <string name="facebook">FACEBOOK</string>
 </resources>
