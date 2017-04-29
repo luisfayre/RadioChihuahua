@@ -57,6 +57,8 @@ public class ReproductorActivity extends AppCompatActivity {
     private ProgressBar progressBar;  //Progressbar
     //Checar internet
     private boolean connected = false;
+    private boolean isShuffle = false;
+    private boolean isRepeat = false;
     //Firebase
     private StorageReference storageReference;
 
@@ -154,6 +156,7 @@ public class ReproductorActivity extends AppCompatActivity {
                                     progressBar.setVisibility(View.GONE);
                                     play.setImageResource(R.drawable.stop);
                                     horarioMagia();
+                                    imagenEstacionMagia();
                                     mp.start();
                                     updateProgressBar();
 //                                    long currentDuration = mediaPlayer.getCurrentPosition();
@@ -176,20 +179,29 @@ public class ReproductorActivity extends AppCompatActivity {
         siguiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(DEFECTO == STREAM_URL_MAGIA){
-                    DEFECTO = STREAM_URL_NORTENA;
-                    imagenEstacionNortenita();
-                    radio(DEFECTO);
-                }else if(DEFECTO == STREAM_URL_NORTENA){
-                    DEFECTO = STREAM_URL_ROMANCE;
-                    horarioRomance();
-                    imagenEstacionRomance();
-                    radio(DEFECTO);
-                }else if(DEFECTO == STREAM_URL_ROMANCE) {
-                    DEFECTO = STREAM_URL_MAGIA;
-                    imagenEstacionMagia();
-                    radio(DEFECTO);
+
+                if(isShuffle){
+                    aleatorio();
+                }else if(isRepeat){
+                    repetido();
+                }else{
+                    if(DEFECTO == STREAM_URL_MAGIA){
+                        DEFECTO = STREAM_URL_NORTENA;
+                        imagenEstacionNortenita();
+                        radio(DEFECTO);
+                    }else if(DEFECTO == STREAM_URL_NORTENA){
+                        DEFECTO = STREAM_URL_ROMANCE;
+                        horarioRomance();
+                        imagenEstacionRomance();
+                        radio(DEFECTO);
+                    }else if(DEFECTO == STREAM_URL_ROMANCE) {
+                        DEFECTO = STREAM_URL_MAGIA;
+                        imagenEstacionMagia();
+                        radio(DEFECTO);
+                    }
                 }
+
+
             }
 
 
@@ -198,23 +210,72 @@ public class ReproductorActivity extends AppCompatActivity {
         anterior.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(DEFECTO == STREAM_URL_MAGIA){
-                    DEFECTO = STREAM_URL_ROMANCE;
-                    imagenEstacionRomance();
-                    horarioRomance();
-                    radio(DEFECTO);
-                }else if(DEFECTO == STREAM_URL_NORTENA){
-                    DEFECTO = STREAM_URL_MAGIA;
-                    imagenEstacionMagia();
-                    radio(DEFECTO);
-                }else if(DEFECTO == STREAM_URL_ROMANCE){
-                    DEFECTO = STREAM_URL_NORTENA;
-                    imagenEstacionNortenita();
-                    radio(DEFECTO);
+
+                if(isShuffle){
+                    aleatorio();
+                }else if(isRepeat){
+                    repetido();
+                }else{
+                    if(DEFECTO == STREAM_URL_MAGIA){
+                        DEFECTO = STREAM_URL_ROMANCE;
+                        imagenEstacionRomance();
+                        horarioRomance();
+                        radio(DEFECTO);
+                    }else if(DEFECTO == STREAM_URL_NORTENA){
+                        DEFECTO = STREAM_URL_MAGIA;
+                        imagenEstacionMagia();
+                        radio(DEFECTO);
+                    }else if(DEFECTO == STREAM_URL_ROMANCE){
+                        DEFECTO = STREAM_URL_NORTENA;
+                        imagenEstacionNortenita();
+                        radio(DEFECTO);
+                    }
                 }
+
             }
 
 
+        });
+
+        alternar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isShuffle){
+                    isShuffle = false;
+                  //  Toast.makeText(getApplicationContext(), "Shuffle is OFF", Toast.LENGTH_SHORT).show();
+                    alternar.setImageResource(R.drawable.rep_shuffle);
+                }else{
+                    // make repeat to true
+                    isShuffle= true;
+                  //  Toast.makeText(getApplicationContext(), "Shuffle is ON", Toast.LENGTH_SHORT).show();
+                    aleatorio();
+                    // make shuffle to false
+                    isRepeat= false;
+                    alternar.setImageResource(R.drawable.rep_shuffle_precionado);
+                    repetir.setImageResource(R.drawable.rep_repetir);
+                }
+            }
+        });
+
+        repetir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isRepeat){
+                    isRepeat = false;
+                   // Toast.makeText(getApplicationContext(), "Repetir OFF", Toast.LENGTH_SHORT).show();
+                    repetir.setImageResource(R.drawable.rep_repetir);
+                }else{
+                    // make repeat to true
+                    isRepeat= true;
+                  //  Toast.makeText(getApplicationContext(), "Rpetir ON", Toast.LENGTH_SHORT).show();
+                    isShuffle = false;
+                    alternar.setImageResource(R.drawable.rep_shuffle);
+                    // make shuffle to false
+                    //    isRepeat = false;
+                    repetir.setImageResource(R.drawable.rep_repetir_precionado);
+                    // btnRepeat.setImageResource(R.drawable.btn_repeat);
+                }
+            }
         });
 
 
@@ -225,7 +286,49 @@ public class ReproductorActivity extends AppCompatActivity {
         reproductor.setAnimation(fade_in)d;
         */
         //updateProgressBar();
-        imagenEstacionMagia();
+        //imagenEstacionMagia();
+    }
+
+    private void repetido() {
+
+        if(DEFECTO == STREAM_URL_NORTENA){
+            DEFECTO = STREAM_URL_NORTENA;
+            imagenEstacionNortenita();
+            radio(DEFECTO);
+        }else if(DEFECTO == STREAM_URL_ROMANCE){
+            DEFECTO = STREAM_URL_ROMANCE;
+            horarioRomance();
+            imagenEstacionRomance();
+            radio(DEFECTO);
+        }else if(DEFECTO == STREAM_URL_MAGIA) {
+            DEFECTO = STREAM_URL_MAGIA;
+            imagenEstacionMagia();
+            radio(DEFECTO);
+        }
+    }
+
+
+    private void aleatorio() {
+
+        int numero = (int) (Math.random() * 3) + 1;
+      //  Toast.makeText(ReproductorActivity.this, ""+ numero, Toast.LENGTH_SHORT).show();
+
+        if(numero == 1){
+            DEFECTO = STREAM_URL_MAGIA;
+            imagenEstacionMagia();
+            horarioMagia();
+            radio(DEFECTO);
+        }else if(numero == 2){
+            DEFECTO = STREAM_URL_NORTENA;
+            horarioNortenia();
+            imagenEstacionNortenita();
+            radio(DEFECTO);
+        }else if(numero == 3) {
+            DEFECTO = STREAM_URL_ROMANCE;
+            imagenEstacionRomance();
+            horarioRomance();
+            radio(DEFECTO);
+        }
     }
 
     private void imagenEstacionRomance() {
@@ -371,6 +474,7 @@ public class ReproductorActivity extends AppCompatActivity {
         int res_id = item.getItemId();
         if (res_id == android.R.id.home) {
            // Toast.makeText(ReproductorActivity.this, "Atras", Toast.LENGTH_SHORT).show();
+            super.onBackPressed();
         }
         if (res_id == R.id.action_buscar) {
            // Toast.makeText(ReproductorActivity.this, "Buscar", Toast.LENGTH_SHORT).show();
